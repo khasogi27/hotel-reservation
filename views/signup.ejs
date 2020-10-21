@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Hotel Reservation</title>
+</head>
+<body>
+    <center>
+    <h1>SignUp</h1>
+    <form action="/signup" method="POST">
+        <label for="first_name">First Name :</label><br>
+        <input type="text" name="first_name" id="first_name" placeholder="John"><br>
+        <label for="last_name">Last Name :</label><br>
+        <input type="text" name="last_name" id="last_name" placeholder="Doe"><br>
+        <label for="no_hp">Phone Number :</label><br>
+        <input type="number" name="no_hp" id="no_hp" placeholder="081234787799"><br>
+        <label for="email">Email :</label><br>
+        <input type="email" name="email" id="email" placeholder="example@email.com"><br>
+        <label for="password">Password :</label><br>
+        <input type="password" name="password" id="password" placeholder="type your password here"><br>
+        <button type="submit">SignUp</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login</a> here!</p>
+    </center>
+</body>
+</html>

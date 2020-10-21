@@ -13,6 +13,7 @@ routes.get('/profile/:email', Controller.getProfile)
 routes.get('/profile/pay/:id', Controller.getPay)
 routes.get('/profile/checkin/:id', Controller.getCheckin)
 routes.get('/profile/cancel/:id', Controller.getCancel)
+routes.get('/logout', Controller.logout)
 
 
 
