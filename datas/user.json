@@ -1,0 +1,10 @@
+[
+  {
+    "first_name": "Bruce",
+    "last_name": "Lee",
+    "password": "bruce123",
+    "no_hp": "08123456789",
+    "email": "bruce@gmail.com",
+    "role": "user"
+  }
+]
