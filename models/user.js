@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    fullname(){
+    fullname() {
       return `${this.first_name} ${this.last_name}`
     }
     static associate(models) {
@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING
   }, {
     hooks: {
-      beforeCreate(data){
-        if(!data.last_name){
+      beforeCreate(data) {
+        if (!data.last_name) {
           data.last_name = data.first_name
         }
         const hash = bcrypt.hashSync(data.password, 12);

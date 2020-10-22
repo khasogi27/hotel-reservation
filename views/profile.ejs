@@ -1,47 +1,8 @@
 <%- include("partial/head",{header : 'My Profile'}) %>
+    <img src="https://www.pngjoy.com/pngl/787/9346051_sackboy-person-unknown-png-hd-png-download.png" alt="Avatar" width="160" heigh="160" style="border-radius:80px"> 
     <h1><%= data.fullname() %> </h1>
     <h4>Email : </h4>
     <p><%= data.email %></p>
     <h4>No hp :</h4>
     <p><%= data.no_hp %></p>
-    <h2>My Order</h2>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Tipe kamar</th>
-          <th>Tanggal checkin</th>
-          <th>Tanggal checkout</th>
-          <th>Harga</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% room.forEach(el => { %>  
-        <tr>
-          <td><%= el.room_type %></td>
-          <td><%= getFullDate(el.Booking.start_date) %></td>
-          <td><%= getFullDate(el.Booking.end_date)%></td>
-          <td><%= calculatePrice(el.Booking.start_date,el.Booking.end_date,el.price) %></td>
-          <% if(el.Booking.status === 'reserve'){ %> 
-          <td>
-            <a href="#">Pay</a> ||
-            <a href="#">Cancel</a>
-          </td>
-          <% }else if(el.Booking.status === 'paid'){ %> 
-            <td>
-              <a href="#">Show QR</a>
-            </td>
-          <% }else if(el.Booking.status === 'checkin'){ %> 
-            <td>
-              Checked In
-            </td>
-          <% }else if(el.Booking.status === 'checkout'){ %> 
-            <td>
-              Completed
-            </td>
-          <% } %> 
-        </tr>
-        <% }) %> 
-      </tbody>
-    </table>
 <%- include("partial/foot") %>

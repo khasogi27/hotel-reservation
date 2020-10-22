@@ -12,9 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
+      Booking.belongsTo(models.User)
+      Booking.belongsTo(models.Room)
     }
   };
   Booking.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     start_date: DataTypes.DATE,
     end_date: DataTypes.DATE,
     status: DataTypes.STRING,

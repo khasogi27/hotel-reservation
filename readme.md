@@ -28,4 +28,5 @@
 | last_name (VARCHAR)   |
 | no_hp (INT)           |
 | email (VARCHAR)       |
-| role: (VARCHAR)       |
+| role: (VARCHAR)
+       |
