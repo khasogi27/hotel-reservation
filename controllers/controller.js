@@ -22,7 +22,7 @@ class Controller {
   static postLogin(req, res) {
   User.findOne({
     where: {
-      email: req.body.email,
+      email: req.body.email
     }
   })
   .then(data => {
@@ -31,11 +31,14 @@ class Controller {
     }
     else {
         bcrypt.compare(req.body.password, data.password)
-        .then(result => {
-          if (result === true) {
+          .then(result => {
+          console.log(result);
+          if (result) {
             req.session.isLoggedIn = true;
             req.session.email = data.email;
             res.redirect('/');
+          } else {
+            res.redirect('/login?err=true');
           }
         })
       }
@@ -96,7 +99,8 @@ class Controller {
   }
 
   static getProfile(req, res) {
-    const email = req.params.email
+    console.log(req.session)
+    res.render('profile')
   }
 
   static getPay(req, res) {
