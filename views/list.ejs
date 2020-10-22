@@ -16,10 +16,10 @@
           <td><%= el.price %></td>
           <td><%= el.available %></td>
           <td>
-            <% if (el.available === 1) { %>
+            <% if (el.available === 0) { %>
               Kamar penuh
-            <% } else if (el.available > 2) { %>
-              <a href="#">Reserve</a>
+            <% } else if (el.available > 0) { %>
+              <a href="/reserve/<%= el.id %>">Reserve</a>
             <% } %>
           </td>
         </tr>

@@ -1,18 +1,15 @@
 const { User, Room, Booking } = require('../models')
 const bcrypt = require("bcrypt")
+const getFullDate = require("../helper/getFullDate")
+const calculatePrice = require("../helper/calculatePrice")
 
 class Controller {
 
   static home(req, res) {
-    if(req.session.isLoggedIn === true) {
-      res.render('home', {
-        email: req.session.email,
-        role : req.session.role
-      });
-    }
-    else {
-      res.redirect('/login');
-    }
+    res.render('home', {
+      email: req.session.email,
+      role : req.session.role
+    });
   }
 
   static getLogin(req, res) {
@@ -32,7 +29,6 @@ class Controller {
     else {
         bcrypt.compare(req.body.password, data.password)
           .then(result => {
-          console.log(result);
           if (result) {
             req.session.isLoggedIn = true;
             req.session.email = data.email;
@@ -44,7 +40,6 @@ class Controller {
       }
     })
     .catch(err => {
-      console.log(err)
       res.send(err);
     });
 
@@ -76,31 +71,77 @@ class Controller {
   }
 
   static getList(req, res) {
-    if(req.session.isLoggedIn === true){
-      Room.findAll()
-        .then(data => {
-          res.render('list', { data })
-        })
-        .catch(err => {
-          res.send(err)
-        })
-    }
-    else {
-      res.redirect('/login');
-    }
+    Room.findAll()
+    .then(data => {
+      res.render('list', { data })
+    })
+    .catch(err => {
+      res.send(err)
+    })
   }
 
   static getReserve(req, res) {
     const id = req.params.id
+    Room.findByPk(id)
+    .then(data =>{
+      res.render('reserve',{data})
+    })
+    .catch(err =>{
+      res.send(err)
+    })
   }
 
   static postReserve(req, res) {
-    const id = req.params.id
+    const {id} = req.params
+    const {start_date, end_date} = req.body
+    Room.findByPk(id)
+    .then(data=>{
+      data.available--
+      const obj = {
+        available : data.available
+      }
+      return Room.update(obj,{where :{id}})
+    })
+    .then(()=>{
+      return User.findAll({where : {
+          email : req.session.email
+        }
+      })
+    })
+    .then(data=>{
+      const UserId = data[0].id
+      const obj = {
+        start_date,
+        end_date,
+        status : 'reserve',
+        RoomId : id,
+        UserId
+      }
+      return Booking.create(obj)
+    })
+    .then(()=>{
+      res.redirect('/profile')
+    })
+    .catch(err=>{
+      res.send(err)
+    })
   }
 
   static getProfile(req, res) {
-    console.log(req.session)
-    res.render('profile')
+    User.findAll({where : {
+      email : req.session.email,
+    },
+    include : Room
+  })
+    .then(data => {
+      data = data[0]
+      const room = data.Rooms
+      res.render('profile', {data, room, getFullDate, calculatePrice})
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+    
   }
 
   static getPay(req, res) {

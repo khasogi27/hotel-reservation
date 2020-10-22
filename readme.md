@@ -16,7 +16,7 @@
 | start_date (Date)  | 
 | end_date (Date)    |
 | status (VARCHAR)
-   |
+| qrkey (VARCHAR)    |
 | RoomId (INT) [FK]  |
 | GuestId (INT) [FK] |
 

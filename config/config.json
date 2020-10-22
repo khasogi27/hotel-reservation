@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "khasogi27",
-    "password": "root",
+    "username": "postgres",
+    "password": "1",
     "database": "hotel-reservation",
     "host": "127.0.0.1",
     "dialect": "postgres"

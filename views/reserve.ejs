@@ -1,14 +1,11 @@
-<%- include("partial/head",{header : 'List Kamar'}) %>
-<h2>Text input fields</h2>
-
-<form>
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe">
+<%- include("partial/head",{header : 'Reserve a Room'}) %>
+<h2><%= data.room_type %> </h2>
+<h2><%= data.price %></h2>
+<form action="/reserve/<%= data.id %>" method="POST">
+  <label for="start_date">Start Date:</label><br>
+  <input type="date" id="start_date" name="start_date"><br>
+  <label for="end_date">End Date:</label><br>
+  <input type="date" id="end_date" name="end_date"><br>
+  <button type="submit">Submit</button>
 </form>
-
-<p>Note that the form itself is not visible.</p>
-
-<p>Also note that the default width of text input fields is 20 characters.</p>
 <%- include("partial/foot") %>

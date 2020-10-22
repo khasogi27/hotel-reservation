@@ -1,16 +1,9 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <center>
-    <h1>Nama</h1>
+<%- include("partial/head",{header : 'My Profile'}) %>
+    <h1><%= data.fullname() %> </h1>
     <h4>Email : </h4>
-    <p>john@gmail.com</p>
+    <p><%= data.email %></p>
     <h4>No hp :</h4>
-    <p>081234567788</p>
+    <p><%= data.no_hp %></p>
     <h2>My Order</h2>
     <table border="1">
       <thead>
@@ -22,19 +15,33 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody> 
+      <tbody>
+        <% room.forEach(el => { %>  
         <tr>
-          <td>Single bed</td>
-          <td>1</td>
-          <td>30</td>
-          <td>1000000</td>
+          <td><%= el.room_type %></td>
+          <td><%= getFullDate(el.Booking.start_date) %></td>
+          <td><%= getFullDate(el.Booking.end_date)%></td>
+          <td><%= calculatePrice(el.Booking.start_date,el.Booking.end_date,el.price) %></td>
+          <% if(el.Booking.status === 'reserve'){ %> 
           <td>
             <a href="#">Pay</a> ||
             <a href="#">Cancel</a>
           </td>
+          <% }else if(el.Booking.status === 'paid'){ %> 
+            <td>
+              <a href="#">Show QR</a>
+            </td>
+          <% }else if(el.Booking.status === 'checkin'){ %> 
+            <td>
+              Checked In
+            </td>
+          <% }else if(el.Booking.status === 'checkout'){ %> 
+            <td>
+              Completed
+            </td>
+          <% } %> 
         </tr>
+        <% }) %> 
       </tbody>
     </table>
-  </center>
-</body>
-</html>
+<%- include("partial/foot") %>
