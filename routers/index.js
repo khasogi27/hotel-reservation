@@ -13,10 +13,18 @@ routes.post('/reserve/:id', Controller.postReserve)
 routes.get('/profile', middleware.isLogin, Controller.getProfile)
 routes.get('/order', middleware.isLogin, Controller.getOrder)
 routes.get('/order/pay/:id', middleware.isLogin,Controller.getPay)
-routes.get('/order/checkin/:id', middleware.isLogin,Controller.getCheckin)
+routes.get('/order/checkin/:id', middleware.isLogin,Controller.getOrderCheckin)
 routes.get('/order/cancel/:id', middleware.isLogin,Controller.getCancel)
-routes.get('/logout', middleware.isLogin,Controller.logout)
+routes.get('/logout', middleware.isLogin, Controller.logout)
 
+routes.get('/edit/:id', middleware.isLogin, Controller.getEdit)
+routes.post('/edit/:id', Controller.postEdit)
+routes.get('/addroom', middleware.isLogin, Controller.getAdd)
+routes.post('/addroom', Controller.postAdd)
+routes.get('/checkin', middleware.isLogin, Controller.getCheckin)
+routes.post('/checkin', Controller.postCheckin)
+routes.get('/checkout', middleware.isLogin, Controller.getCheckout)
+routes.post('/checkout', Controller.postCheckout)
 
 
 module.exports = routes

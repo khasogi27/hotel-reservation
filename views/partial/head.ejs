@@ -13,7 +13,12 @@
     <a href="/">Home</a> ||
     <a href="/list">List</a> ||
     <a href="/profile">Profile</a> ||
+  <% if(role === 'admin'){ %>
+    <a href="/checkin">Checkin</a> ||
+    <a href="/checkout">Checkout</a> ||
+  <% }else if(role === 'user'){ %>
     <a href="/order">Order</a> ||
+  <% } %>
     <a href="/logout">Logout</a>
     <h2><%= header %> </h2>
     <hr>

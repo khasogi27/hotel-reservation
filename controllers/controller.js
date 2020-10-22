@@ -32,6 +32,7 @@ class Controller {
             .then(result => {
               if (result) {
                 req.session.isLoggedIn = true;
+                req.session.role = data.role;
                 req.session.email = data.email;
                 res.redirect('/');
               } else {
@@ -72,9 +73,10 @@ class Controller {
   }
 
   static getList(req, res) {
+    const role = req.session.role
     Room.findAll()
       .then(data => {
-        res.render('list', { data })
+        res.render('list', { data, role })
       })
       .catch(err => {
         res.send(err)
@@ -82,10 +84,11 @@ class Controller {
   }
 
   static getReserve(req, res) {
+    const role = req.session.role
     const id = req.params.id
     Room.findByPk(id)
       .then(data => {
-        res.render('reserve', { data })
+        res.render('reserve', { data, role })
       })
       .catch(err => {
         res.send(err)
@@ -130,6 +133,7 @@ class Controller {
   }
 
   static getProfile(req, res) {
+    const role = req.session.role
     User.findOne({
       where: {
         email: req.session.email,
@@ -145,7 +149,7 @@ class Controller {
         //   })
         // })
         // .then(data => {
-        res.render('profile', { data })
+        res.render('profile', { data, role })
       })
       .catch(err => {
         res.send(err)
@@ -153,6 +157,7 @@ class Controller {
   }
 
   static getOrder(req, res) {
+    const role = req.session.role
     let UserId
     User.findOne({
       where: {
@@ -169,7 +174,7 @@ class Controller {
         })
       })
       .then(data => {
-        res.render('order', { data, getFullDate, calculatePrice })
+        res.render('order', { data, getFullDate, calculatePrice, role })
       })
       .catch(err => {
         res.send(err)
@@ -189,7 +194,8 @@ class Controller {
       })
   }
 
-  static getCheckin(req, res) {
+  static getOrderCheckin(req, res) {
+    const role = req.session.role
     const id = req.params.id
     console.log(id)
     Booking.findByPk(id)
@@ -199,7 +205,7 @@ class Controller {
       })
       .then(url => {
         console.log(url)
-        res.render("showqr", { url })
+        res.render("showqr", { url, role })
       })
       .catch(err => {
         res.send(err)
@@ -238,8 +244,8 @@ class Controller {
       .catch(err => {
         res.render(err)
       })
-
   }
+
   static logout(req, res) {
     req.session.destroy(err => {
       if (err) {
@@ -248,6 +254,98 @@ class Controller {
       res.redirect('/login');
     });
   }
+
+  static getEdit(req, res) {
+    const role = req.session.role
+    const { id } = req.params
+    Room.findOne({
+      where: {
+        id
+      }
+    })
+      .then(data => {
+        res.render('edit', { data, role })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static postEdit(req, res) {
+    const { id } = req.params
+    const obj = {
+      room_type: req.body.room_type,
+      available: req.body.available,
+      price: req.body.price
+    }
+    console.log('ini obj', obj);
+    Room.update(obj, {
+      where: {
+        id
+      }
+    })
+      .then(data => {
+        res.redirect('/list')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static getAdd(req, res) {
+    const role = req.session.role
+    res.render("addroom", { role })
+  }
+
+  static postAdd(req, res) {
+    const obj = {
+      room_type: req.body.room_type,
+      available: req.body.available,
+      price: req.body.price
+    }
+    Room.create(obj)
+      .then(() => {
+        res.redirect('/list')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static getCheckin(req, res) {
+    const role = req.session.role
+    res.render("checkin", { role })
+  }
+
+  static postCheckin(req, res) {
+    const qrkey = req.body.qrkey
+    const obj = { status: 'checkin' }
+    Booking.update(obj, { where: { qrkey } })
+      .then(() => {
+        res.redirect('/')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static getCheckout(req, res) {
+    const role = req.session.role
+    res.render("checkout", { role })
+  }
+
+  static postCheckout(req, res) {
+    const qrkey = req.body.qrkey
+    const obj = { status: 'checkout' }
+    Booking.update(obj, { where: { qrkey } })
+      .then(() => {
+        res.redirect('/')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
 }
 
 module.exports = Controller

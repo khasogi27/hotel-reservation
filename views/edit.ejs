@@ -1,0 +1,11 @@
+<%- include("partial/head",{header : 'Edit a Room'}) %>
+<form action="/edit/<%=data.id%>" method="POST">
+  <label for="room_type">Room Type:</label><br>
+  <input type="text" id="room_type" name="room_type" placeholder="Input Room Type Here" value="<%=data.room_type%>"><br>
+  <label for="available">Total Room Available:</label><br>
+  <input type="number" id="available" name="available" placeholder="Input Number of Available Room Here" value="<%=data.available%>"><br>
+  <label for="price">Price /days:</label><br>
+  <input type="number" id="price" name="price" placeholder="Input room price/day here" value="<%=data.price%>"><br>
+  <button type="submit">Submit</button>
+</form>
+<%- include("partial/foot") %>

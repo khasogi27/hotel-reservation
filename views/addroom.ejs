@@ -1,0 +1,11 @@
+<%- include("partial/head",{header : 'Add a Room'}) %>
+<form action="/addroom" method="POST">
+  <label for="room_type">Room Type:</label><br>
+  <input type="text" id="room_type" name="room_type" placeholder="Input Room Type Here"><br>
+  <label for="available">Total Room Available:</label><br>
+  <input type="number" id="available" name="available" placeholder="Input Number of Available Room Here"><br>
+  <label for="price">Price /days:</label><br>
+  <input type="number" id="price" name="price" placeholder="Input room price/day here"><br>
+  <button type="submit">Submit</button>
+</form>
+<%- include("partial/foot") %>

@@ -1,29 +1,38 @@
 <%- include("partial/head",{header : 'List Kamar'}) %>
 <h1>Welcome to Movie Application</h1>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Room Type</th>
-        <th>Price</th>
-        <th>Available</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% data.forEach(el => { %>
-        <tr>
-          <td><%= el.room_type %></td>
-          <td><%= el.price %></td>
-          <td><%= el.available %></td>
-          <td>
-            <% if (el.available === 0) { %>
-              Kamar penuh
-            <% } else if (el.available > 0) { %>
-              <a href="/reserve/<%= el.id %>">Reserve</a>
-            <% } %>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<% if (role === 'admin') { %>
+<a href="/addroom">Add Room</a>
+<% } %>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Room Type</th>
+      <th>Price</th>
+      <th>Available</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.forEach(el => { %>
+    <tr>
+      <td><%= el.room_type %></td>
+      <td><%= el.price %></td>
+      <td><%= el.available %></td>
+      <% if (role === 'user') { %>
+      <td>
+        <% if (el.available === 0) { %>
+        Kamar penuh
+        <% } else if (el.available > 0) { %>
+        <a href="/reserve/<%= el.id %>">Reserve</a>
+        <% } %>
+      </td>
+      <% } else if (role === 'admin') { %>
+      <td>
+        <a href="/edit/<%= el.id %>">Edit</a>
+      </td>
+      <% } %>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 <%- include("partial/foot") %>

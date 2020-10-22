@@ -27,6 +27,7 @@
             </td>
           <% }else if(el.status === 'checkin'){ %> 
             <td>
+              <a href="/order/checkin/<%= el.id %>">Show QR</a> ||
               Checked In
             </td>
           <% }else if(el.status === 'checkout'){ %> 

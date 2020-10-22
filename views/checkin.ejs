@@ -1,0 +1,7 @@
+<%- include("partial/head",{header : 'Scan a QR Key to Check-In'}) %>
+<form action="/checkin" method="POST">
+  <label for="qrkey">QR Key:</label><br>
+  <input type="text" id="qrkey" name="qrkey" placeholder="Input QR Key here using QR Scanner"><br>
+  <button type="submit">Submit</button>
+</form>
+<%- include("partial/foot") %>
