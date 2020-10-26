@@ -15,7 +15,7 @@
 | id (INT) [PK]      |
 | start_date (Date)  | 
 | end_date (Date)    |
-| status (VARCHAR)
+| status (VARCHAR)   |
 | qrkey (VARCHAR)    |
 | RoomId (INT) [FK]  |
 | GuestId (INT) [FK] |
@@ -28,5 +28,4 @@
 | last_name (VARCHAR)   |
 | no_hp (INT)           |
 | email (VARCHAR)       |
-| role: (VARCHAR)
-       |
+| role: (VARCHAR)       |
